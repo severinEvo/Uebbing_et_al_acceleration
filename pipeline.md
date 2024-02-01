@@ -1,11 +1,15 @@
-Requirements:
-perl v
-bedtools
-R
-UCSC genome browser utilities: liftOver, bigWigToBedGraph, bedToBigBed (http://hgdownload.soe.ucsc.edu/downloads.html#source_downloads)
-PHAST Utilities: maf_parse (http://compgen.cshl.edu/phast/)
+### Prerequisits:
 
-# Retrieve and parse repeat annotations
+- perl
+- python
+- bedtools
+- [UCSC genome browser utilities](http://hgdownload.soe.ucsc.edu/downloads.html#source_downloads): liftOver, bigWigToBedGraph, bedToBigBed
+- [PHAST Utilities](http://compgen.cshl.edu/phast/): maf_parse
+- R
+
+# Generate annotations
+
+### Retrieve and parse repeat annotations
 
 	cd annotations/
 	wget https://hgdownload.soe.ucsc.edu/goldenPath/hg38/database/rmsk.txt.gz
@@ -24,14 +28,14 @@ Pseudogene annotations
 
 	wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_40/gencode.v40.2wayconspseudos.gtf.gz
 
-# Generate exon and promoter annotations
+### Generate exon and promoter annotations
 
 	wget https://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_40/gencode.v40.annotation.gtf.gz
 	zcat gencode.v40.annotation.gtf.gz | grep -P "\texon\t" >gencode_exon.v40.annotation.gtf; gzip gencode_exon.v40.annotation.gtf
 	../scripts/extract-promotor.pl -i -c hg38.chrom.sizes <(zcat gencode.v40.annotation.gtf.gz) >gencode_promotor-5kup1kdn.v40.annotation_ENS.bed; gzip gencode_promotor-5kup1kdn.v40.annotation_ENS.bed
 	../scripts/extract-promotor.pl -i -c hg38.chrom.sizes -5 1000 -3 0 <(zcat gencode.v40.annotation.gtf.gz) >gencode_promotor-1kup0kdn.v40.annotation_ENS.bed; gzip gencode_promotor-1kup0kdn.v40.annotation_ENS.bed
 
-# Additioal annotation files
+### Additioal annotation files
 
 liftOver files
 
@@ -43,9 +47,14 @@ phastCons scores
 	wget --no-check-certificate https://genome.senckenberg.de//data/hg38/phastConsEline_hg38_multiz120Mammals.bw
 	bigWigToBedGraph phastConsEline_hg38_multiz120Mammals.bw phastConsEline_hg38_multiz120Mammals.bdg
 
-# Generate PRE annotations
+Branch list for R
 
-	cd ../data/
+	R CMD BATCH ../scripts/branch-list.R
+	cd ..
+
+# Generate PRE dataset
+
+	mkdir data; cd data/
 	wget https://bds.mpi-cbg.de/hillerlab/120MammalAlignment/Human120way/data/conservation/phastConsElements_hg38_multiz120Mammals.bed.gz
 	bedtools intersect -v -a phastConsElements_hg38_multiz120Mammals.bed.gz -b ../annotations/gencode_exon.v40.annotation.gtf.gz | bedtools intersect -v -a - -b ../annotations/gencode_promotor-1kup0kdn.v40.annotation_ENS.bed.gz | bedtools merge -i - -d 9 | perl -lane 'print if($F[2]-$F[1]>50);' | grep -P "^chr[0-9XY]+\t" >phastConsElements_hg38_multiz120Mammals_noExon_merge10_l49.bed; gzip phastConsElements_hg38_multiz120Mammals_noExon_merge10_l49.bed
 	bedtools intersect -v -a phastConsElements_hg38_multiz120Mammals_noExon_merge10_l49.bed.gz -b <(zcat ../annotations/hg38_hg38_all_chain_merge.bed.gz ../annotations/repeats_merge.bed.gz) | bedtools intersect -v -a - -b ../annotations/gencode.v40.2wayconspseudos.gtf.gz >phastConsElements_hg38_multiz120Mammals_filtered.bed; gzip phastConsElements_hg38_multiz120Mammals_filtered.bed
@@ -72,7 +81,7 @@ Intersect lifted human cCREs with mouse ChIP-type data and revert into hg38 coor
 	bedtools intersect -u -a GRCh38TOmm10-cCREs_filtered_named.bed -b all_mouse.bed | perl -lane '@a = split /:|-/, $F[3]; print "$a[0]\t$a[1]\t$a[2]";' >../GRCh38-cCREs_mouse-cCRE-chromHMM-intersect.bed
 	cd ../; gzip GRCh38-cCREs_mouse-cCRE-chromHMM-intersect.bed
 
-# Annotate PRE list with PRE type, sequence space type, phastCons score
+### Annotate PRE list with PRE type, sequence space type, phastCons score
 
 PRE type
 
@@ -96,34 +105,53 @@ phastCons
 
 	bedtools map -a sequence.bed -b ../annotations/phastConsEline_hg38_multiz120Mammals.bdg -c 4 -o mean >PREs.bed; gzip PREs.bed
 
-# Download and parse MAF files
+### Download and parse MAF files
 
-	cd MAFs/
+	mkdir MAFs; cd MAFs/
 	perl ../../scripts/prepRun_extractMafs.pl
+	cd ../
 
 This will generate a job file with one job per line. Run jobs as appropriate for your computing cluster. Scripts here are written for use with Slurm and Dead Simple Queue (https://github.com/ycrc/dsq).
 
-# Detect accelerated sequence substitution on individual branches using phyloP
+### Detect accelerated sequence substitution on individual branches using phyloP
 
-	cd ../phyloP_out/
+	mkdir phyloP_out; cd phyloP_out/
 	perl ../../scripts/prepRun_phyPacc.pl # Run jobs
+	cd ../
 
-# Apply branch-wise filters against GC-biased gene conversion and indels
+### Branch-wise filters against GC-biased gene conversion and indels
 
-### Run phastBias to detect likely GC-biased gene conversion
+Run phastBias to detect likely GC-biased gene conversion
 
-	cd ../phastBias_out/
+	mkdir phastBias_out; cd phastBias_out/
 	../../scripts/prepRun_phastBias.pl # Run jobs
+	cd ../
 
-### Apply individual sequence-based indel filter
+Individual sequence-based indel filter
 
-	cd ../MAFs/
+	cd MAFs/
 	../../scripts/prepRun_qualFilter.pl # Run jobs
+	cd ../
 
 Then run 
 
-	cd ../qualFilter/
+	mkdir qualFilter; cd qualFilter/
 	cat *_use.bed | sort -u | sort -k1,1 -k2,2n >qualFilter_useTips.bed
 	gzip qualFilter_useTips.bed
-	python ../../scripts/qualFilter-step2.py qualFilter_useTips.bed.gz ../../annotations/clalist.pyData qualFilter_useClades.tsv
+	python ../../scripts/qualFilter-step2.py qualFilter_useTips.bed.gz ../../annotations/branchlist.pyData qualFilter_useBranches.tsv; gzip qualFilter_useBranches.tsv
+	zcat qualFilter_useBranches.tsv.gz | perl -lane '@p = split /:|-/, $F[0]; $" = "\t"; print "@p\t$F[1]";' | sort -k1,1 -k2,2n >qualFilter_useBranches.bed; gzip qualFilter_useBranches.bed
+	cd ../
+
+### Collect accelerated PRE dataset
+
+Combine pCEs and cCREs (per branch)
+
+	cd phyloP_out/
+	for i in $(ls *Es_phyP_ACC.out | cut -f 2 -d '_' | sort -u); do echo $i; cat ../../annotations/header >$i\_phyloP_ACC.tsv; cat chr*_$i\_*Es_phyP_ACC.out | grep -vP "^#chr\t" | perl -lane '$" = "\t"; print "@F[0..2]\t@F[4..8]\t'$i'";' | sort -k1,1 -k2,2n >>$i\_phyloP_ACC.tsv; gzip -f $i\_phyloP_ACC.tsv; done
+
+Filter out results in phastBias tracks
+
+	for i in $(ls *_phyloP_ACC.tsv.gz | cut -f 2 -d '_' | sort -u); do echo $i; zcat $i\_phyloP_ACC.tsv.gz | head -1 >$i\_phyloP-phastBias.tsv; zcat $i\_phyloP_ACC.tsv.gz | grep -vP "^chr\t" | bedtools intersect -v -a - -b ../phastBias_out/$i\_phastBias.gff.gz >>$i\_phyloP-phastBias.tsv; gzip -f $i\_phyloP-phastBias.tsv; done
+
+Collect dataset
 

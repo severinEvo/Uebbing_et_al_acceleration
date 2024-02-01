@@ -6,4 +6,6 @@ annotations/hg38_hg38_all_chain*
 annotations/phastConsEline_hg38_multiz120Mammals.*
 annotations/gencode*
 annotations/*chain.gz
+annotations/branch-list.Rdata
 data/*
+*.Rout
