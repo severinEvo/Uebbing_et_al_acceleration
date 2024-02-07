@@ -6,7 +6,7 @@ use utf8;
 my @chroms = ("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9","chr10",
 	"chr11","chr12","chr13","chr14","chr15","chr16","chr17","chr18","chr19","chr20",
 	"chr21","chr22","chrX");
-my @clades = ("pan","hominini","homininae","hominidae","hominoidea","papionini",
+my @branches = ("pan","hominini","homininae","hominidae","hominoidea","papionini",
 	"cercopithecinae","presbytini","colobini","colobinae","cercopithecidae","catarrhini",
 	"callitrichoidea","cebidae","platyrrhini","simiiformes","haplorrhini","lemuroidea",
 	"strepsirrhini","primates","primatomorpha","euarchonta","arvicolinae-cricetinae",
@@ -26,7 +26,7 @@ my @clades = ("pan","hominini","homininae","hominidae","hominoidea","papionini",
 
 foreach my $i (@chroms){
 	open(OUT, ">phyPacc_$i\_jobfile.batch");
-	foreach my $j (@clades){
+	foreach my $j (@branches){
 		print OUT ". ~/.bashrc; ";
 		print OUT "cd data/phyloP_out/; ";
 		print OUT "phyloP -i MAF -m LRT -f ../MAFs/cCREs_$i\.bed -o ACC -B $j ../../annotations/tree_hg38_120mammals_named.mod ../MAFs/cCREs_$i\.maf >$i\_$j\_cCREs_phyP_ACC.out\n";
