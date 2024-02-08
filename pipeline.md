@@ -36,6 +36,20 @@ Pseudogene annotations
 	../scripts/extract-promotor.pl -i -c hg38.chrom.sizes <(zcat gencode.v40.annotation.gtf.gz) >gencode_promotor-5kup1kdn.v40.annotation_ENS.bed; gzip gencode_promotor-5kup1kdn.v40.annotation_ENS.bed
 	../scripts/extract-promotor.pl -i -c hg38.chrom.sizes -5 1000 -3 0 <(zcat gencode.v40.annotation.gtf.gz) >gencode_promotor-1kup0kdn.v40.annotation_ENS.bed; gzip gencode_promotor-1kup0kdn.v40.annotation_ENS.bed
 
+### TFBS motifs
+
+JASPAR
+
+	mkdir -p meme-database; cd meme-database
+	wget https://jaspar.elixir.no/download/data/2024/CORE/JASPAR2024_CORE_vertebrates_non-redundant_pfms_meme.zip; unzip
+
+HOCOMOCO
+
+	wget https://hocomoco11.autosome.org/final_bundle/hocomoco11/core/HUMAN/mono/HOCOMOCOv11_core_HUMAN_mono_meme_format.meme
+	wget https://hocomoco11.autosome.org/final_bundle/hocomoco11/core/MOUSE/mono/HOCOMOCOv11_core_MOUSE_mono_meme_format.meme
+
+Motifs from Jolma et al. Cell 2013, Table S3, are extracted and included in GitHub data
+
 ### Additioal annotation files
 
 liftOver files
@@ -177,6 +191,9 @@ Raw output figures were edited in Inkscape
 ### Prepare data for TFBS analysis of Fig. 3B
 
 	for i in $(zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1 | sort -u); do echo $i; zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1-3 | grep -P "^$i\\t" >data/MAFs/tmp_MAFs/$i\/PREs_$i\.bed; done
+
+Download all 120 genomes, transform into fasta, make Markov models, map motifs to genomes
+
 	perl scripts/prepRun_download-genomes.pl # Run download-prep-genomes.txt
 	perl scripts/prepRun_fimoMap.pl # Run fimo_job_*.txt jobs
 
