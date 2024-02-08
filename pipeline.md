@@ -41,14 +41,15 @@ Pseudogene annotations
 JASPAR
 
 	mkdir -p meme-database; cd meme-database
-	wget https://jaspar.elixir.no/download/data/2024/CORE/JASPAR2024_CORE_vertebrates_non-redundant_pfms_meme.zip; unzip
+	wget wget https://jaspar.elixir.no/download/data/2020/CORE/JASPAR2020_CORE_vertebrates_non-redundant_pfms_meme.zip; unzip JASPAR2020_CORE_vertebrates_non-redundant_pfms_meme.zip
 
 HOCOMOCO
 
 	wget https://hocomoco11.autosome.org/final_bundle/hocomoco11/core/HUMAN/mono/HOCOMOCOv11_core_HUMAN_mono_meme_format.meme
 	wget https://hocomoco11.autosome.org/final_bundle/hocomoco11/core/MOUSE/mono/HOCOMOCOv11_core_MOUSE_mono_meme_format.meme
+	cd ..
 
-Motifs from Jolma et al. Cell 2013, Table S3, are extracted and included in GitHub data
+Motifs from Jolma et al. Cell 2013, extracted from Table S3, are included in GitHub data
 
 ### Additioal annotation files
 

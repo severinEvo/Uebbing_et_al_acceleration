@@ -28,6 +28,7 @@ foreach my $g (@genomes){
 	print OUT "twoBitToFa $g\.2bit $g\.fa; ";
 	print OUT "module load MEME; ";
 	print OUT "fasta-get-markov $g\.fa $g\_markov-bg-model.txt\n";
+}
 close(OUT);
 
 # Create jobs:
