@@ -1,0 +1,9 @@
+annotations/rmsk.*
+annotations/simpleRepeat.*
+annotations/genomicSuperDups.*
+annotations/repeats_merge.bed.gz
+annotations/hg38_hg38_all_chain*
+annotations/phastConsEline_hg38_multiz120Mammals.*
+annotations/gencode*
+annotations/*chain.gz
+data/*
