@@ -198,5 +198,17 @@ Download all 120 genomes, transform into fasta, make Markov models, map motifs t
 	perl scripts/prepRun_download-genomes.pl # Run download-prep-genomes.txt
 	perl scripts/prepRun_fimoMap.pl # Run fimo_job_*.txt jobs
 
-	perl scripts/prepRun_PRE-MAFs.pl # Run parseMAFs-job.txt; produces one MAF file for each PRE
+Generate one TFBS bed file per genome
+
+	perl scripts/prepRun_allbed.pl
+
+Extract one MAF file for each PRE to translate PREs to other genomes
+
+	perl scripts/prepRun_PRE-MAFs.pl # Run parseMAFs-job.txt
 	perl scripts/prepRun_translate.pl # Run perl-translate-job.txt
+
+Lists of accelerated and all PREs
+
+	cd data/phyloP_out/; for i in $(zcat phyloP-sign.bed.gz | cut -f 1 | sort -u); do echo $i; zcat phyloP-sign.bed.gz | grep -P "$i\\t" | perl -lane 'print "$F[0]:$F[1]-$F[2]";' | sort -u >../MAFs/tmp_MAFs/$i\/phyloP-$i\_sign.lst; done
+	cd data/phyloP_out/; for i in $(zcat phyloP-all.tsv.gz | grep -vP "^chr\t" | cut -f 1 | sort -u); do echo $i; zcat phyloP-all.tsv.gz | grep -P "$i\\t" | perl -lane 'print "$F[0]:$F[1]-$F[2]";' | sort -u >../MAFs/tmp_MAFs/$i\/phyloP-$i\_all.lst; done
+
