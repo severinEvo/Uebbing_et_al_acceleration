@@ -13,10 +13,10 @@ foreach my $i (@chroms){
 	print OUT "cd data/MAFs/; ";
 	print OUT "wget https://bds.mpi-cbg.de/hillerlab/120MammalAlignment/Human120way/data/maf/$i\.maf.gz; ";
 	print OUT "gunzip $i\.maf.gz; ";
-	print OUT "zcat ../CREs.bed.gz | grep -P \"^$i\\t.*pCE\" | cut -f 1-3 >pCEs_$i\.bed; ";
+	print OUT "zcat ../PREs.bed.gz | grep -P \"^$i\\t.*pCE\" | cut -f 1-3 >pCEs_$i\.bed; ";
 	print OUT "maf_parse -g pCEs_$i\.bed $i\.maf >pCEs_$i\.maf; ";
 
-	print OUT "zcat ../CREs.bed.gz | grep -P \"^$i\\t.*cCRE\" | cut -f 1-3 >cCREs_$i\.bed; ";
+	print OUT "zcat ../PREs.bed.gz | grep -P \"^$i\\t.*cCRE\" | cut -f 1-3 >cCREs_$i\.bed; ";
 	print OUT "maf_parse -g cCREs_$i\.bed $i\.maf >cCREs_$i\.maf";
 	if($i eq "chr1" | $i eq "chr2"){ # large chromosomes are split into two for phastBias
 		print OUT "; maf_parse -S 150000000 -d 1 -r $i\_ $i\.maf";

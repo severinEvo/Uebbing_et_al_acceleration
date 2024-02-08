@@ -3,8 +3,9 @@
 - perl
 - python
 - bedtools
-- [UCSC genome browser utilities](http://hgdownload.soe.ucsc.edu/downloads.html#source_downloads): liftOver, bigWigToBedGraph, bedToBigBed
+- [UCSC genome browser utilities](http://hgdownload.soe.ucsc.edu/downloads.html#source_downloads): liftOver, bigWigToBedGraph, bedToBigBed, towBitToFa
 - [PHAST Utilities](http://compgen.cshl.edu/phast/): maf_parse
+- MEME suite
 - R
 
 # Generate annotations
@@ -59,7 +60,7 @@ gnomAD data
 
 # Generate PRE dataset
 
-	mkdir data; cd data/
+	mkdir -p data; cd data/
 	wget https://bds.mpi-cbg.de/hillerlab/120MammalAlignment/Human120way/data/conservation/phastConsElements_hg38_multiz120Mammals.bed.gz
 	bedtools intersect -v -a phastConsElements_hg38_multiz120Mammals.bed.gz -b ../annotations/gencode_exon.v40.annotation.gtf.gz | bedtools intersect -v -a - -b ../annotations/gencode_promotor-1kup0kdn.v40.annotation_ENS.bed.gz | bedtools merge -i - -d 9 | perl -lane 'print if($F[2]-$F[1]>50);' | grep -P "^chr[0-9XY]+\t" >phastConsElements_hg38_multiz120Mammals_noExon_merge10_l49.bed; gzip phastConsElements_hg38_multiz120Mammals_noExon_merge10_l49.bed
 	bedtools intersect -v -a phastConsElements_hg38_multiz120Mammals_noExon_merge10_l49.bed.gz -b <(zcat ../annotations/hg38_hg38_all_chain_merge.bed.gz ../annotations/repeats_merge.bed.gz) | bedtools intersect -v -a - -b ../annotations/gencode.v40.2wayconspseudos.gtf.gz >phastConsElements_hg38_multiz120Mammals_filtered.bed; gzip phastConsElements_hg38_multiz120Mammals_filtered.bed
@@ -69,7 +70,7 @@ gnomAD data
 
 Mouse ChIP data
 
-	mkdir mouse_chip; cd mouse_chip/
+	mkdir -p mouse_chip; cd mouse_chip/
 	wget https://api.wenglab.org/screen_v13/fdownloads/mm10-ccREs.bed
 	liftOver -minMatch=.7 mm10-ccREs.bed ../../annotations/mm10ToHg38.over.chain.gz mm10TOhg38-ccREs.bed unMapped
 	for i in $(cat files.txt); do wget $i; done
@@ -112,7 +113,7 @@ phastCons
 
 ### Download and parse MAF files
 
-	mkdir MAFs; cd MAFs/
+	mkdir -p MAFs; cd MAFs/
 	perl ../../scripts/prepRun_extractMafs.pl
 	cd ../
 
@@ -120,7 +121,7 @@ This will generate a job file with one job per line. Run jobs as appropriate for
 
 ### Detect accelerated sequence substitution on individual branches using phyloP
 
-	mkdir phyloP_out; cd phyloP_out/
+	mkdir -p phyloP_out; cd phyloP_out/
 	perl ../../scripts/prepRun_phyPacc.pl # Run jobs
 	cd ../
 
@@ -128,7 +129,7 @@ This will generate a job file with one job per line. Run jobs as appropriate for
 
 Run phastBias to detect likely GC-biased gene conversion
 
-	mkdir phastBias_out; cd phastBias_out/
+	mkdir -p phastBias_out; cd phastBias_out/
 	../../scripts/prepRun_phastBias.pl # Run jobs
 	cd ../
 
@@ -140,7 +141,7 @@ Individual sequence-based indel filter
 
 Then run 
 
-	mkdir qualFilter; cd qualFilter/
+	mkdir -p qualFilter; cd qualFilter/
 	cat *_use.bed | sort -u | sort -k1,1 -k2,2n >qualFilter_useTips.bed
 	gzip qualFilter_useTips.bed
 	python ../../scripts/qualFilter-step2.py qualFilter_useTips.bed.gz ../../annotations/branchlist.pyData qualFilter_useBranches.tsv; gzip qualFilter_useBranches.tsv
@@ -173,3 +174,11 @@ Raw output figures were edited in Inkscape
 
 	R CMD BATCH scripts/constraint.R
 
+### Prepare data for TFBS analysis of Fig. 3B
+
+	for i in $(zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1 | sort -u); do echo $i; zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1-3 | grep -P "^$i\\t" >data/MAFs/tmp_MAFs/$i\/PREs_$i\.bed; done
+	perl scripts/prepRun_download-genomes.pl # Run download-prep-genomes.txt
+	perl scripts/prepRun_fimoMap.pl # Run fimo_job_*.txt jobs
+
+	perl scripts/prepRun_PRE-MAFs.pl # Run parseMAFs-job.txt; produces one MAF file for each PRE
+	perl scripts/prepRun_translate.pl # Run perl-translate-job.txt

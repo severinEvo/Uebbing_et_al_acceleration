@@ -9,8 +9,7 @@ my @chroms = ("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9","ch
 
 open(OUT, ">PRE-MAFs.batch");
 foreach my $i (@chroms){
-	print OUT ". ~/.bashrc; ";
-	print OUT "cd data/MAFs/; ";
+	print OUT ". ~/.bashrc; mkdir -p data/MAFs/; cd data/MAFs/; ";
 
 	print OUT "LIST=\$(perl -lane 'print \"\$F[0]:\$F[1]-\$F[2]\";' pCEs_$i\.bed); for j in \$LIST; ";
 	print OUT "do echo \"\$j\" | perl -lne '\$_ =~ s/(chr[XY0-9]+):([0-9]+)-([0-9]+)/\$1\\t\$2\\t\$3/; print;' >tmp_pCE_$i\.bed; ";
