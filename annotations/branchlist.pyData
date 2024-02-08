@@ -1,4 +1,4 @@
-clalist = {
+branchlist = {
 	"pan": {
 		"in1_list": {"panTro5"},
 		"in2_list": {"panPan2"},
