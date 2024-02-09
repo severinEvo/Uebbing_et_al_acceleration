@@ -191,14 +191,14 @@ Raw output figures were edited in Inkscape
 
 ### Prepare data for TFBS analysis of Fig. 3B
 
-	for i in $(zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1 | sort -u); do echo $i; zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1-3 | grep -P "^$i\\t" >data/MAFs/tmp_MAFs/$i\/PREs_$i\.bed; done
+	for i in $(zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1 | sort -u); do echo $i; zcat data/PRE-gene-dataset/PREs_qualFiltered.bed.gz | cut -f 1-3 | grep -P "^$i\\t" >data/MAFs/tmp_mafs/$i\/PREs_$i\.bed; done
 
 Download all 120 genomes, transform into fasta, make Markov models, map motifs to genomes
 
 	perl scripts/prepRun_download-genomes.pl # Run download-prep-genomes.txt
 	perl scripts/prepRun_fimoMap.pl # Run fimo_job_*.txt jobs
 
-Generate one TFBS bed file per genome
+Generate one bed file with all mapped TFBSs per genome
 
 	perl scripts/prepRun_allbed.pl
 
@@ -207,8 +207,20 @@ Extract one MAF file for each PRE to translate PREs to other genomes
 	perl scripts/prepRun_PRE-MAFs.pl # Run parseMAFs-job.txt
 	perl scripts/prepRun_translate.pl # Run perl-translate-job.txt
 
-Lists of accelerated and all PREs
+Lists of all PREs per chr, used in following step
 
-	cd data/phyloP_out/; for i in $(zcat phyloP-sign.bed.gz | cut -f 1 | sort -u); do echo $i; zcat phyloP-sign.bed.gz | grep -P "$i\\t" | perl -lane 'print "$F[0]:$F[1]-$F[2]";' | sort -u >../MAFs/tmp_MAFs/$i\/phyloP-$i\_sign.lst; done
-	cd data/phyloP_out/; for i in $(zcat phyloP-all.tsv.gz | grep -vP "^chr\t" | cut -f 1 | sort -u); do echo $i; zcat phyloP-all.tsv.gz | grep -P "$i\\t" | perl -lane 'print "$F[0]:$F[1]-$F[2]";' | sort -u >../MAFs/tmp_MAFs/$i\/phyloP-$i\_all.lst; done
+	cd data/phyloP_out/; for i in $(zcat phyloP-all.tsv.gz | grep -vP "^chr\t" | cut -f 1 | sort -u); do echo $i; zcat phyloP-all.tsv.gz | grep -P "$i\\t" | perl -lane 'print "$F[0]:$F[1]-$F[2]";' | sort -u >../meme/$i\/phyloP-$i\_all.lst; done
+
+Intersect mapped TFBSs with PREs in their respective genome coordinates
+
+	perl scripts/prep_fimo-intersect.pl # Run chr*_fimo-intersect_job.txt
+
+Calculate distance measures for TFBS sets in accelerated and non-accelerated PRE-branch combinations
+
+	R CMD BATCH scripts/dist-sign.R
+	R CMD BATCH scripts/dist-nsign.R
+
+Analyze and create Fig. 3B
+
+	R CMD BATCH scripts/dist-analysis.R
 

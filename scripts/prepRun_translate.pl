@@ -9,10 +9,11 @@ my @chroms = ("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9","ch
 
 open(OUT, ">perl-translate-job.txt");
 foreach my $i (@chroms){
-	print OUT ". ~/.bashrc; mkdir -p data/MAFs/tmp_MAFs/$i ; cd data/MAFs/tmp_MAFs/$i ; ";
+	print OUT ". ~/.bashrc; cd data/MAFs/tmp_MAFs/$i ; ";
 	print OUT "module load BEDTools; ";
 	print OUT "for i in \$(ls $i\*.maf); do perl ../../../../scripts/maf-translator.pl \$i ; ";
-	print OUT "done\n";
+	print OUT "done; ";
+	print OUT "mkdir -p ../../../meme/$i ; mv *_trans.bed ../../../meme/$i \n";
 }
 close(OUT);
 

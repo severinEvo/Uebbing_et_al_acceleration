@@ -9,18 +9,16 @@ my @chroms = ("chr1","chr2","chr3","chr4","chr5","chr6","chr7","chr8","chr9","ch
 
 open(OUT, ">PRE-MAFs-job.txt");
 foreach my $i (@chroms){
-	print OUT ". ~/.bashrc; mkdir -p data/MAFs/tmp_mafs/$i ; cd data/MAFs/; ";
+	print OUT ". ~/.bashrc; mkdir -p data/MAFs/tmp_mafs/$i ; cd data/MAFs/tmp_mafs/$i ; ";
 
-	print OUT "LIST=\$(perl -lane 'print \"\$F[0]:\$F[1]-\$F[2]\";' pCEs_$i\.bed); for j in \$LIST; ";
-	print OUT "do echo \"\$j\" | perl -lne '\$_ =~ s/(chr[XY0-9]+):([0-9]+)-([0-9]+)/\$1\\t\$2\\t\$3/; print;' >tmp_pCE_$i\.bed; ";
-	print OUT "maf_parse -g tmp_pCE_$i\.bed pCEs_$i\.maf >tmp_mafs/$i\/\"\$j\"\\.maf; ";
-	print OUT "rm tmp_pCE_$i\.bed; ";
+	print OUT "LIST=\$(perl -lane 'print \"\$F[0]:\$F[1]-\$F[2]\";' ../../pCEs_$i\.bed); for j in \$LIST; ";
+	print OUT "do echo \"\$j\" | perl -lne '\$_ =~ s/(chr[XY0-9]+):([0-9]+)-([0-9]+)/\$1\\t\$2\\t\$3/; print;' >\"\$j\"\\.bed; ";
+	print OUT "maf_parse -g \"\$j\"\\.bed pCEs_$i\.maf >\"\$j\"\\.maf; ";
 	print OUT "done; ";
 
-	print OUT "LIST=\$(perl -lane 'print \"\$F[0]:\$F[1]-\$F[2]\";' cCREs_$i\.bed); for j in \$LIST; ";
-	print OUT "do echo \"\$j\" perl -lne '\$_ =~ s/(chr[XY0-9]+):([0-9]+)-([0-9]+)/\$1\\t\$2\\t\$3/; print;' >tmp_cCRE_$i\.bed; ";
-	print OUT "maf_parse -g tmp_cCRE_$i\.bed cCREs_$i\.maf >tmp_mafs/$i\/\"\$j\"\\.maf; ";
-	print OUT "rm tmp_cCRE_$i\.bed; ";
+	print OUT "LIST=\$(perl -lane 'print \"\$F[0]:\$F[1]-\$F[2]\";' ../../cCREs_$i\.bed); for j in \$LIST; ";
+	print OUT "do echo \"\$j\" | perl -lne '\$_ =~ s/(chr[XY0-9]+):([0-9]+)-([0-9]+)/\$1\\t\$2\\t\$3/; print;' >\"\$j\"\\.bed; ";
+	print OUT "maf_parse -g \"\$j\"\\.bed cCREs_$i\.maf >\"\$j\"\\.maf; ";
 	print OUT "done\n";
 }
 close(OUT);

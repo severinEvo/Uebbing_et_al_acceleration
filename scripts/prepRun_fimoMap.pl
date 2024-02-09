@@ -22,6 +22,58 @@ my @genomes = ("hg38","panTro5","panPan2","gorGor5","ponAbe2","nomLeu3","rheMac8
 	"oryAfe1","dasNov3","HLchoHof2","monDom5","sarHar1","HLphaCin1","ornAna2");
 
 foreach my $g (@genomes){
+	my @Hmouse;
+	open(IN, "<annotations/meme-database/HOCOMOCO_MOUSE.tsv");
+	while(<IN>){
+		chomp;
+		my @t = split /\t/;
+		push @Hmouse, $t[3];
+	}
+	close(IN);
+	open(OUT, ">fimo_job_$g\.txt");
+	foreach my $i (@Hmouse){
+		print OUT ". ~/.bashrc; mkdir -p data/meme/genomes/$g ; cd data/meme/genomes/$g ; ";
+		print OUT "module load MEME; ";
+		print OUT "fimo --bfile ../../../genomes/$g\_markov-bg-model.txt --motif $i --max-stored-scores 10000000 --oc $i\_out ../../../../annotations/meme-database/HOCOMOCOv11_core_MOUSE_mono_meme_format.meme $g\.fa; ";
+		print OUT "rm $i\_out/*.xml $i\_out/*.tsv $i\_out/*.html\n";
+	}
+	close(OUT);	
+	
+	my @Hhuman;
+	open(IN, "<annotations/meme-database/HOCOMOCO_HUMAN.tsv");
+	while(<IN>){
+		chomp;
+		my @t = split /\t/;
+		push @Hhuman, $t[3];
+	}
+	close(IN);
+	open(OUT, ">>fimo_job_$g\.txt");
+	foreach my $i (@Hhuman){
+		print OUT ". ~/.bashrc; mkdir -p data/meme/genomes/$g ; cd data/meme/genomes/$g ; ";
+		print OUT "module load MEME; ";
+		print OUT "fimo --bfile ../../../genomes/$g\_markov-bg-model.txt --motif $i --max-stored-scores 10000000 --oc $i\_out ../../../../annotations/meme-database/HOCOMOCOv11_core_HUMAN_mono_meme_format.meme $g\.fa; ";
+		print OUT "rm $i\_out/*.xml $i\_out/*.tsv $i\_out/*.html\n";
+	}
+	close(OUT);
+	
+	my @jaspar;
+	open(IN, "<annotations/meme-database/jaspar_modified.tsv");
+	while(<IN>){
+		chomp;
+		my @t = split /\t/;
+		my @u = split /_/, $t[3];
+		push @jaspar, $u[1];
+	}
+	close(IN);
+	open(OUT, ">>fimo_job_$g\.txt");
+	foreach my $i (@jaspar){
+		print OUT ". ~/.bashrc; mkdir -p data/meme/genomes/$g ; cd data/meme/genomes/$g ; ";
+		print OUT "module load MEME; ";
+		print OUT "fimo --bfile ../../../genomes/$g\_markov-bg-model.txt --motif $i --max-stored-scores 10000000 --oc $i\_out ../../../../annotations/meme-database/$i\.meme $g\.fa; ";
+		print OUT "rm $i\_out/*.xml $i\_out/*.tsv $i\_out/*.html\n";
+	}
+	close(OUT);
+
 	my @jolma;
 	my @a = (1..6);
 	foreach my $i (@a){
@@ -35,68 +87,14 @@ foreach my $g (@genomes){
 		close(IN);
 		open(OUT, ">>fimo_job_$g\.txt");
 		foreach my $j (@jolma){
-			print OUT ". ~/.bashrc; mkdir -p data/meme/$g ; cd data/meme/$g ; ";
+			print OUT ". ~/.bashrc; mkdir -p data/meme/genomes/$g ; cd data/meme/genomes/$g ; ";
 			print OUT "module load MEME; ";
-			print OUT "fimo --bfile ../../genomes/$g\_markov-bg-model.txt --motif $j --max-stored-scores 10000000 --oc $j\_out ../../../annotations/meme-database/table_s3-$i\.meme $g\.fa; ";
+			print OUT "fimo --bfile ../../../genomes/$g\_markov-bg-model.txt --motif $j --max-stored-scores 10000000 --oc $j\_out ../../../../annotations/meme-database/table_s3-$i\.meme $g\.fa; ";
 			print OUT "rm $j\_out/*.xml $j\_out/*.tsv $j\_out/*.html\n";
 		}
 		close(OUT);
 		@jolma = ();
-	}
-	
-	my @Hhuman;
-	open(IN, "<annotations/meme-database/HOCOMOCO_HUMAN.tsv");
-	while(<IN>){
-		chomp;
-		my @t = split /\t/;
-		push @Hhuman, $t[3];
-	}
-	close(IN);
-	my @Hmouse;
-	open(IN, "<annotations/meme-database/HOCOMOCO_MOUSE.tsv");
-	while(<IN>){
-		chomp;
-		my @t = split /\t/;
-		push @Hmouse, $t[3];
-	}
-	close(IN);
-	my @jaspar;
-	open(IN, "<annotations/meme-database/jaspar_modified.tsv");
-	while(<IN>){
-		chomp;
-		my @t = split /\t/;
-		my @u = split /_/, $t[3];
-		push @jaspar, $u[1];
-	}
-	close(IN);
-	
-	open(OUT, ">>fimo_job_$g\.txt");
-	foreach my $i (@Hmouse){
-		print OUT ". ~/.bashrc; mkdir -p data/meme/$g ; cd data/meme/$g ; ";
-		print OUT "module load MEME; ";
-		print OUT "fimo --bfile ../../genomes/$g\_markov-bg-model.txt --motif $i --max-stored-scores 10000000 --oc $i\_out ../../../annotations/meme-database/HOCOMOCOv11_core_MOUSE_mono_meme_format.meme $g\.fa; ";
-		print OUT "rm $i\_out/*.xml $i\_out/*.tsv $i\_out/*.html\n";
-	}
-	close(OUT);	
-	
-	open(OUT, ">>fimo_job_$g\.txt");
-	foreach my $i (@Hhuman){
-		print OUT ". ~/.bashrc; mkdir -p data/meme/$g ; cd data/meme/$g ; ";
-		print OUT "module load MEME; ";
-		print OUT "fimo --bfile ../../genomes/$g\_markov-bg-model.txt --motif $i --max-stored-scores 10000000 --oc $i\_out ../../../annotations/meme-database/HOCOMOCOv11_core_HUMAN_mono_meme_format.meme $g\.fa; ";
-		print OUT "rm $i\_out/*.xml $i\_out/*.tsv $i\_out/*.html\n";
-	}
-	close(OUT);
-	
-	open(OUT, ">>fimo_job_$g\.txt");
-	foreach my $i (@jaspar){
-		print OUT ". ~/.bashrc; mkdir -p data/meme/$g ; cd data/meme/$g ; ";
-		print OUT "module load MEME; ";
-		print OUT "fimo --bfile ../../genomes/$g\_markov-bg-model.txt --motif $i --max-stored-scores 10000000 --oc $i\_out ../../../annotations/meme-database/$i\.meme $g\.fa; ";
-		print OUT "rm $i\_out/*.xml $i\_out/*.tsv $i\_out/*.html\n";
-	}
-	close(OUT);
-}
+}}
 
 # Create jobs:
 # module load dSQ

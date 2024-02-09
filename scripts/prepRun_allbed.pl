@@ -21,7 +21,7 @@ my @spec = ("hg38","panTro5","panPan2","gorGor5","ponAbe2","nomLeu3","rheMac8","
 
 open(OUT, ">allbed_job.txt");
 foreach my $sp (@spec){
-	print OUT ". ~/.bashrc; cd data/meme/$sp ; ";
+	print OUT ". ~/.bashrc; cd data/meme/genomes/$sp ; ";
 	print OUT "for i in \$(ls *_out/fimo.gff | perl -lne '/^(.*)_out\//; print \$1;'); ";
 	print OUT "do echo \$i; ";
 	print OUT "perl -lane '\$st = \$F[3]-1; \@name = split /=|_/, \$F[8]; print \"\$F[0]\\t\$st\\t\$F[4]\\t\$name[1]\\t\$F[5]\\t\$F[6]\";' \$i\\_out/fimo.gff >\$i\\_out/fimo_\$i\\.bed; ";
