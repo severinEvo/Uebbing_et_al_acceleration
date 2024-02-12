@@ -1,0 +1,420 @@
+pan<-list("Pan_troglodytes","Pan_paniscus","Homo_sapiens")
+hominini<-list("Homo_sapiens",c("Pan_troglodytes","Pan_paniscus"),"Gorilla_gorilla")
+homininae<-list(c("Homo_sapiens","Pan_troglodytes","Pan_paniscus"),"Gorilla_gorilla",
+	"Pongo_abelii")
+hominidae<-list(c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla"),
+	"Pongo_abelii","Nomascus_leucogenys")
+hominoidea<-list(c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla",
+		"Pongo_abelii"),"Nomascus_leucogenys",
+	c("Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina","Papio_anubis",
+		"Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus","Nasalis_larvatus",
+		"Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles"))
+papionini<-list(c("Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina"),
+	c("Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys"),"Chlorocebus_sabaeus")
+cercopithecinae<-list(c("Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina",
+		"Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys"),"Chlorocebus_sabaeus",
+	c("Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles"))
+presbytini<-list("Nasalis_larvatus",c("Rhinopithecus_roxellana","Rhinopithecus_bieti"),
+	c("Colobus_angolensis","Piliocolobus_tephrosceles"))
+colobini<-list("Colobus_angolensis","Piliocolobus_tephrosceles",
+	c("Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti"))
+colobinae<-list(c("Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti"),
+	c("Colobus_angolensis","Piliocolobus_tephrosceles"),
+	c("Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina","Papio_anubis",
+		"Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus"))
+cercopithecidae<-list(c("Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina",
+		"Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus"),
+	c("Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles"),
+	c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla","Pongo_abelii",
+		"Nomascus_leucogenys"))
+catarrhini<-list(c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla",
+		"Pongo_abelii","Nomascus_leucogenys"),
+	c("Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina","Papio_anubis",
+		"Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus","Nasalis_larvatus",
+		"Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles"),
+	c("Callithrix_jacchus","Aotus_nancymaae","Saimiri_boliviensis","Cebus_capucinus"))
+callitrichoidea<-list("Callithrix_jacchus","Aotus_nancymaae",
+	c("Saimiri_boliviensis","Cebus_capucinus"))
+cebidae<-list("Saimiri_boliviensis","Cebus_capucinus",c("Callithrix_jacchus","Aotus_nancymaae"))
+platyrrhini<-list(c("Callithrix_jacchus","Aotus_nancymaae"),
+	c("Saimiri_boliviensis","Cebus_capucinus"),
+	c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla","Pongo_abelii",
+		"Nomascus_leucogenys","Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina",
+		"Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus",
+		"Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles"))
+lemuroidea<-list("Microcebus_murinus","Propithecus_coquereli","Otolemur_garnettii")
+strepsirrhini<-list("Otolemur_garnettii",c("Microcebus_murinus","Propithecus_coquereli"),
+	c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla","Pongo_abelii",
+		"Nomascus_leucogenys","Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina",
+		"Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus",
+		"Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles","Callithrix_jacchus","Aotus_nancymaae","Saimiri_boliviensis",
+		"Cebus_capucinus"))
+euarchonta<-list(c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla",
+		"Pongo_abelii","Nomascus_leucogenys","Macaca_mulatta","Macaca_fascicularis",
+		"Macaca_nemestrina","Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys",
+		"Chlorocebus_sabaeus","Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti",
+		"Colobus_angolensis","Piliocolobus_tephrosceles","Callithrix_jacchus","Aotus_nancymaae",
+		"Saimiri_boliviensis","Cebus_capucinus","Otolemur_garnettii",
+		"Microcebus_murinus","Propithecus_coquereli"),c("Tupaia_chinensis","Tupaia_tana"),
+	c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+		"Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis","Dipodomys_ordii",
+		"Heterocephalus_glaber","Fukomys_damarensis","Cavia_aperea","Cavia_porcellus",
+		"Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera","Octodon_degus",
+		"Spermophilus_dauricus","Marmota_marmota","Lepus_americanus","Oryctolagus_cuniculus",
+		"Ochotona_princeps"))
+'arvicolinae-cricetinae'<-list("Microtus_ochrogaster",
+	c("Cricetulus_griseus","Mesocricetus_auratus"),"Peromyscus_maniculatus")
+cricetidae<-list(c("Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus"),
+	"Peromyscus_maniculatus",
+	c("Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus","Meriones_unguiculatus"))
+mus<-list(c("Mus_musculus","Mus_caroli"),"Mus_pahari","Rattus_norvegicus")
+murinae<-list(c("Mus_musculus","Mus_caroli","Mus_pahari"),"Rattus_norvegicus",
+	"Meriones_unguiculatus")
+muridae<-list(c("Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus"),
+	"Meriones_unguiculatus",
+	c("Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus","Peromyscus_maniculatus"))
+eumuroida<-list(c("Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus"),
+	c("Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus","Meriones_unguiculatus"),
+	"Nannospalax_galili")
+muroidea<-list(c("Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+	"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+	"Meriones_unguiculatus"),"Nannospalax_galili","Jaculus_jaculus")
+myodonta<-list("Jaculus_jaculus",c("Microtus_ochrogaster","Cricetulus_griseus",
+		"Mesocricetus_auratus","Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari",
+		"Rattus_norvegicus","Meriones_unguiculatus","Nannospalax_galili"),
+	c("Castor_canadensis","Dipodomys_ordii"))
+castorimorpha<-list("Castor_canadensis","Dipodomys_ordii",
+	c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+		"Meriones_unguiculatus","Nannospalax_galili"))
+phiomorpha<-list("Heterocephalus_glaber","Fukomys_damarensis",c("Cavia_aperea","Cavia_porcellus",
+	"Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera","Octodon_degus"))
+'octodontoidea-chinchilloidea'<-list("Chinchilla_lanigera","Octodon_degus","Cavia_aperea",
+	"Cavia_porcellus","Cavia_tschudii","Dolichotis_patagonum")
+caviomorpha<-list(c("Cavia_aperea","Cavia_porcellus","Cavia_tschudii","Dolichotis_patagonum"),
+	c("Chinchilla_lanigera","Octodon_degus"),c("Heterocephalus_glaber","Fukomys_damarensis"))
+hystricomorpha<-list(c("Heterocephalus_glaber","Fukomys_damarensis"),
+	c("Cavia_aperea","Cavia_porcellus","Cavia_tschudii","Dolichotis_patagonum",
+		"Chinchilla_lanigera","Octodon_degus"),
+	c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+		"Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis","Dipodomys_ordii"))
+'myodonta-castorimorpha-hystricomorpha'<-list(c("Jaculus_jaculus","Microtus_ochrogaster",
+		"Cricetulus_griseus","Mesocricetus_auratus","Peromyscus_maniculatus","Mus_musculus",
+		"Mus_caroli","Mus_pahari","Rattus_norvegicus","Meriones_unguiculatus",
+		"Nannospalax_galili","Castor_canadensis","Dipodomys_ordii"),
+	c("Heterocephalus_glaber","Fukomys_damarensis","Cavia_aperea","Cavia_porcellus",
+		"Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera","Octodon_degus"),
+	c("Spermophilus_dauricus","Marmota_marmota"))
+sciuromorpha<-list("Spermophilus_dauricus","Marmota_marmota",
+	c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+		"Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis","Dipodomys_ordii",
+		"Heterocephalus_glaber","Fukomys_damarensis","Cavia_aperea","Cavia_porcellus",
+		"Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera","Octodon_degus"))
+rodentia<-list(c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus",
+		"Mesocricetus_auratus","Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari",
+		"Rattus_norvegicus","Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis",
+		"Dipodomys_ordii","Heterocephalus_glaber","Fukomys_damarensis","Cavia_porcellus",
+		"Chinchilla_lanigera","Octodon_degus"),c("Spermophilus_dauricus","Marmota_marmota"),
+	c("Lepus_americanus","Oryctolagus_cuniculus","Ochotona_princeps"))
+lagomorpha<-list(c("Lepus_americanus","Oryctolagus_cuniculus"),"Ochotona_princeps",
+	c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+		"Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis","Dipodomys_ordii",
+		"Heterocephalus_glaber","Fukomys_damarensis","Cavia_aperea","Cavia_porcellus",
+		"Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera","Octodon_degus",
+		"Spermophilus_dauricus","Marmota_marmota"))
+glires<-list(c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus",
+		"Mesocricetus_auratus","Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari",
+		"Rattus_norvegicus","Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis",
+		"Dipodomys_ordii","Heterocephalus_glaber","Fukomys_damarensis","Cavia_aperea",
+		"Cavia_porcellus","Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera",
+		"Octodon_degus","Spermophilus_dauricus","Marmota_marmota"),
+	c("Lepus_americanus","Oryctolagus_cuniculus","Ochotona_princeps"),
+	c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla","Pongo_abelii",
+		"Nomascus_leucogenys","Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina",
+		"Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus",
+		"Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles","Callithrix_jacchus","Aotus_nancymaae","Saimiri_boliviensis",
+		"Cebus_capucinus","Otolemur_garnettii","Microcebus_murinus","Propithecus_coquereli",
+		"Tupaia_chinensis","Tupaia_tana"))
+euarchontoglires<-list(c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla",
+		"Pongo_abelii","Nomascus_leucogenys","Macaca_mulatta","Macaca_fascicularis",
+		"Macaca_nemestrina","Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys",
+		"Chlorocebus_sabaeus","Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti",
+		"Colobus_angolensis","Piliocolobus_tephrosceles","Callithrix_jacchus","Aotus_nancymaae",
+		"Saimiri_boliviensis","Cebus_capucinus","Otolemur_garnettii",
+		"Microcebus_murinus","Propithecus_coquereli","Tupaia_chinensis","Tupaia_tana"),
+	c("Jaculus_jaculus","Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+		"Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis","Dipodomys_ordii",
+		"Heterocephalus_glaber","Fukomys_damarensis","Cavia_aperea","Cavia_porcellus",
+		"Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera","Octodon_degus",
+		"Spermophilus_dauricus","Marmota_marmota","Lepus_americanus","Oryctolagus_cuniculus",
+		"Ochotona_princeps"),
+	c("Vicugna_pacos","Camelus_ferus","Camelus_bactrianus","Camelus_dromedarius",
+		"Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas","Lipotes_vexillifer",
+		"Kogia_breviceps","Balaenoptera_acutorostrata","Balaenoptera_bonaerensis","Bos_taurus",
+		"Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis","Ovis_aries","Ovis_canadensis",
+		"Capra_hircus","Pantholops_hodgsonii","Odocoileus_virginianus","Elaphurus_davidianus",
+		"Sus_scrofa","Catagonus_wagneri","Equus_caballus","Equus_przewalskii","Equus_asinus",
+		"Ceratotherium_simum","Felis_catus","Acinonyx_jubatus","Panthera_tigris",
+		"Panthera_pardus","Canis_lupus_familiaris","Lycaon_pictus","Mustela_putorius",
+		"Enhydra_lutris","Ailurus_fulgens","Ailuropoda_melanoleuca","Ursus_maritimus",
+		"Odobenus_rosmarus","Mirounga_angustirostris","Leptonychotes_weddellii",
+		"Neomonachus_schauinslandi","Zalophus_californianus","Manis_pentadactyla",
+		"Manis_javanica","Pteropus_alecto","Pteropus_vampyrus","Rousettus_aegyptiacus",
+		"Rhinolophus_sinicus","Hipposideros_armiger","Eptesicus_fuscus","Myotis_davidii",
+		"Myotis_brandtii","Myotis_lucifugus","Miniopterus_natalensis","Desmodus_rotundus",
+		"Erinaceus_europaeus","Sorex_araneus","Condylura_cristata"))
+camelus<-list(c("Camelus_ferus","Camelus_bactrianus"),"Camelus_dromedarius","Vicugna_pacos")
+camelidae<-list("Vicugna_pacos",c("Camelus_ferus","Camelus_bactrianus","Camelus_dromedarius"),
+	c("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas","Lipotes_vexillifer",
+		"Kogia_breviceps","Balaenoptera_acutorostrata","Balaenoptera_bonaerensis","Bos_taurus",
+		"Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis","Ovis_aries","Ovis_canadensis",
+		"Capra_hircus","Pantholops_hodgsonii","Odocoileus_virginianus","Elaphurus_davidianus",
+		"Sus_scrofa","Catagonus_wagneri"))
+delphinidae<-list("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas")
+delphinoidea<-list(c("Tursiops_truncatus","Orcinus_orca"),"Delphinapterus_leucas",
+	"Lipotes_vexillifer")
+'delphinoidea-inoidea'<-list(c("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas"),
+	"Lipotes_vexillifer","Kogia_breviceps")
+odontoceti<-list(c("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas",
+		"Lipotes_vexillifer"),"Kogia_breviceps",c("Balaenoptera_acutorostrata",
+		"Balaenoptera_bonaerensis"))
+mysticeti<-list("Balaenoptera_acutorostrata","Balaenoptera_bonaerensis",c("Tursiops_truncatus",
+		"Orcinus_orca","Delphinapterus_leucas","Lipotes_vexillifer","Kogia_breviceps"))
+cetacea<-list(c("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas","Lipotes_vexillifer",
+		"Kogia_breviceps"),c("Balaenoptera_acutorostrata","Balaenoptera_bonaerensis"),
+	c("Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis","Ovis_aries",
+		"Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii","Odocoileus_virginianus",
+		"Elaphurus_davidianus"))
+bovina<-list(c("Bos_taurus","Bos_indicus"),c("Bison_bison","Bos_mutus"),"Bubalus_bubalis")
+bovini<-list(c("Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus"),"Bubalus_bubalis",
+	c("Ovis_aries","Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii"))
+ovis<-list("Ovis_aries","Ovis_canadensis","Capra_hircus")
+caprinae<-list(c("Ovis_aries","Ovis_canadensis"),"Capra_hircus","Pantholops_hodgsonii")
+caprini<-list(c("Ovis_aries","Ovis_canadensis","Capra_hircus"),"Pantholops_hodgsonii",
+	c("Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis"))
+bovidae<-list(c("Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis"),
+	c("Ovis_aries","Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii"),
+	c("Odocoileus_virginianus","Elaphurus_davidianus"))
+cervidae<-list("Odocoileus_virginianus","Elaphurus_davidianus",
+	c("Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis","Ovis_aries",
+		"Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii"))
+pecora<-list(c("Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis",
+		"Ovis_aries","Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii"),
+	c("Odocoileus_virginianus","Elaphurus_davidianus"),c("Tursiops_truncatus","Orcinus_orca",
+		"Delphinapterus_leucas","Lipotes_vexillifer","Kogia_breviceps",
+		"Balaenoptera_acutorostrata","Balaenoptera_bonaerensis"))
+cetruminantia<-list(c("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas",
+		"Lipotes_vexillifer","Kogia_breviceps","Balaenoptera_acutorostrata",
+		"Balaenoptera_bonaerensis"),c("Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus",
+		"Bubalus_bubalis","Ovis_aries","Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii",
+		"Odocoileus_virginianus","Elaphurus_davidianus"),c("Sus_scrofa","Catagonus_wagneri"))
+artiofabula<-list(c("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas",
+		"Lipotes_vexillifer","Kogia_breviceps","Balaenoptera_acutorostrata",
+		"Balaenoptera_bonaerensis","Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus",
+		"Bubalus_bubalis","Ovis_aries","Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii",
+		"Odocoileus_virginianus","Elaphurus_davidianus"),
+	c("Sus_scrofa","Catagonus_wagneri"),
+	c("Vicugna_pacos","Camelus_ferus","Camelus_bactrianus","Camelus_dromedarius"))
+cetartiodactyla<-list(c("Vicugna_pacos","Camelus_ferus","Camelus_bactrianus",
+		"Camelus_dromedarius"),
+	c("Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas","Lipotes_vexillifer",
+		"Kogia_breviceps","Balaenoptera_acutorostrata","Balaenoptera_bonaerensis","Bos_taurus",
+		"Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis","Ovis_aries","Ovis_canadensis",
+		"Capra_hircus","Pantholops_hodgsonii","Odocoileus_virginianus","Elaphurus_davidianus",
+		"Sus_scrofa","Catagonus_wagneri"),
+	c("Equus_caballus","Equus_przewalskii","Equus_asinus","Ceratotherium_simum","Felis_catus",
+		"Acinonyx_jubatus","Panthera_tigris","Panthera_pardus","Canis_lupus_familiaris",
+		"Lycaon_pictus","Mustela_putorius","Enhydra_lutris","Ailurus_fulgens",
+		"Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus",
+		"Manis_pentadactyla","Manis_javanica","Pteropus_alecto","Pteropus_vampyrus",
+		"Rousettus_aegyptiacus","Rhinolophus_sinicus","Hipposideros_armiger","Eptesicus_fuscus",
+		"Myotis_davidii","Myotis_brandtii","Myotis_lucifugus","Miniopterus_natalensis",
+		"Desmodus_rotundus"))
+equus<-list("Equus_caballus","Equus_przewalskii","Equus_asinus")
+equidae<-list(c("Equus_caballus","Equus_przewalskii"),"Equus_asinus","Ceratotherium_simum")
+perissodactyla<-list(c("Equus_caballus","Equus_przewalskii","Equus_asinus"),"Ceratotherium_simum",
+	c("Felis_catus","Acinonyx_jubatus","Panthera_tigris","Panthera_pardus",
+		"Canis_lupus_familiaris","Lycaon_pictus","Mustela_putorius","Enhydra_lutris",
+		"Ailurus_fulgens","Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus",
+		"Mirounga_angustirostris","Leptonychotes_weddellii","Neomonachus_schauinslandi",
+		"Zalophus_californianus","Manis_pentadactyla","Manis_javanica"))
+felinae<-list("Felis_catus","Acinonyx_jubatus",c("Panthera_tigris","Panthera_pardus"))
+panthera<-list("Panthera_tigris","Panthera_pardus",c("Felis_catus","Acinonyx_jubatus"))
+felidae<-list(c("Felis_catus","Acinonyx_jubatus"),c("Panthera_tigris","Panthera_pardus"),
+	c("Canis_lupus_familiaris","Lycaon_pictus","Vulpes_lagopus","Mustela_putorius",
+		"Enhydra_lutris","Ailurus_fulgens","Ailuropoda_melanoleuca","Ursus_maritimus",
+		"Odobenus_rosmarus","Mirounga_angustirostris","Leptonychotes_weddellii",
+		"Neomonachus_schauinslandi","Zalophus_californianus"))
+canidae<-list(c("Canis_lupus_familiaris","Lycaon_pictus"),"Vulpes_lagopus",
+	c("Mustela_putorius","Enhydra_lutris","Ailurus_fulgens","Ailuropoda_melanoleuca",
+		"Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus"))
+mustelidae<-list("Mustela_putorius","Enhydra_lutris","Ailurus_fulgens")
+musteloidea<-list(c("Mustela_putorius","Enhydra_lutris"),"Ailurus_fulgens",
+	c("Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus"))
+ursidae<-list("Ailuropoda_melanoleuca","Ursus_maritimus",
+	c("Odobenus_rosmarus","Mirounga_angustirostris","Leptonychotes_weddellii",
+		"Neomonachus_schauinslandi","Zalophus_californianus"))
+phocidae<-list(c("Mirounga_angustirostris","Leptonychotes_weddellii"),
+	"Neomonachus_schauinslandi",c("Zalophus_californianus","Odobenus_rosmarus"))
+pinnipedia<-list("Odobenus_rosmarus",c("Mirounga_angustirostris","Leptonychotes_weddellii",
+		"Neomonachus_schauinslandi","Zalophus_californianus"),
+	c("Ailuropoda_melanoleuca","Ursus_maritimus"))
+arctoidea<-list(c("Mustela_putorius","Enhydra_lutris","Ailurus_fulgens"),
+	c("Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus"),
+	c("Canis_lupus_familiaris","Lycaon_pictus","Vulpes_lagopus"))
+caniformia<-list(c("Canis_lupus_familiaris","Lycaon_pictus","Vulpes_lagopus"),
+	c("Mustela_putorius","Enhydra_lutris","Ailurus_fulgens","Ailuropoda_melanoleuca",
+		"Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus"),
+	c("Felis_catus","Acinonyx_jubatus","Panthera_tigris","Panthera_pardus"))
+carnivora<-list(c("Felis_catus","Acinonyx_jubatus","Panthera_tigris","Panthera_pardus"),
+	c("Canis_lupus_familiaris","Lycaon_pictus","Vulpes_lagopus","Mustela_putorius",
+		"Enhydra_lutris","Ailurus_fulgens","Ailuropoda_melanoleuca","Ursus_maritimus",
+		"Odobenus_rosmarus","Mirounga_angustirostris","Leptonychotes_weddellii",
+		"Neomonachus_schauinslandi","Zalophus_californianus"),
+	c("Manis_pentadactyla","Manis_javanica"))
+pholidota<-list("Manis_pentadactyla","Manis_javanica",c("Felis_catus","Acinonyx_jubatus",
+		"Panthera_tigris","Panthera_pardus","Canis_lupus_familiaris","Lycaon_pictus",
+		"Vulpes_lagopus","Mustela_putorius","Enhydra_lutris","Ailurus_fulgens",
+		"Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus"))
+ferae<-list(c("Felis_catus","Acinonyx_jubatus","Panthera_tigris","Panthera_pardus",
+		"Canis_lupus_familiaris","Lycaon_pictus","Vulpes_lagopus","Mustela_putorius",
+		"Enhydra_lutris","Ailurus_fulgens","Ailuropoda_melanoleuca","Ursus_maritimus",
+		"Odobenus_rosmarus","Mirounga_angustirostris","Leptonychotes_weddellii",
+		"Neomonachus_schauinslandi","Zalophus_californianus"),
+	c("Manis_pentadactyla","Manis_javanica"),
+	c("Equus_caballus","Equus_przewalskii","Equus_asinus","Ceratotherium_simum"))
+pteropus<-list("Pteropus_alecto","Pteropus_vampyrus","Rousettus_aegyptiacus")
+pteropodidae<-list(c("Pteropus_alecto","Pteropus_vampyrus"),"Rousettus_aegyptiacus",
+	c("Rhinolophus_sinicus","Hipposideros_armiger"))
+yinochiroptera<-list("Rhinolophus_sinicus","Hipposideros_armiger",
+	c("Pteropus_alecto","Pteropus_vampyrus","Rousettus_aegyptiacus"))
+yinpterochiroptera<-list(c("Pteropus_alecto","Pteropus_vampyrus","Rousettus_aegyptiacus"),
+	c("Rhinolophus_sinicus","Hipposideros_armiger"),c("Eptesicus_fuscus","Myotis_davidii",
+			"Myotis_brandtii","Myotis_lucifugus","Miniopterus_natalensis","Desmodus_rotundus"))
+vespertilionoidea<-list(c("Eptesicus_fuscus","Myotis_davidii","Myotis_brandtii",
+		"Myotis_lucifugus"),"Miniopterus_natalensis","Desmodus_rotundus")
+yangochiroptera<-list(c("Eptesicus_fuscus","Myotis_davidii","Myotis_brandtii","Myotis_lucifugus",
+		"Miniopterus_natalensis"),"Desmodus_rotundus",
+	c("Pteropus_alecto","Pteropus_vampyrus","Rousettus_aegyptiacus","Rhinolophus_sinicus",
+		"Hipposideros_armiger"))
+chiroptera<-list(c("Pteropus_alecto","Pteropus_vampyrus","Rousettus_aegyptiacus",
+		"Rhinolophus_sinicus","Hipposideros_armiger"),
+	c("Eptesicus_fuscus","Myotis_davidii","Myotis_brandtii","Myotis_lucifugus",
+		"Miniopterus_natalensis","Desmodus_rotundus"),
+	c("Equus_caballus","Equus_przewalskii","Equus_asinus","Ceratotherium_simum","Felis_catus",
+		"Acinonyx_jubatus","Panthera_tigris","Panthera_pardus","Canis_lupus_familiaris",
+		"Lycaon_pictus","Vulpes_lagopus","Mustela_putorius","Enhydra_lutris","Ailurus_fulgens",
+		"Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus",
+		"Manis_pentadactyla","Manis_javanica"))
+scrotifera<-list(c("Vicugna_pacos","Camelus_ferus","Camelus_bactrianus","Camelus_dromedarius",
+		"Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas","Lipotes_vexillifer",
+		"Kogia_breviceps","Balaenoptera_acutorostrata","Balaenoptera_bonaerensis","Bos_taurus",
+		"Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis","Ovis_aries","Ovis_canadensis",
+		"Capra_hircus","Pantholops_hodgsonii","Odocoileus_virginianus","Elaphurus_davidianus",
+		"Sus_scrofa","Catagonus_wagneri"),
+	c("Equus_caballus","Equus_przewalskii","Equus_asinus","Ceratotherium_simum","Felis_catus",
+		"Acinonyx_jubatus","Panthera_tigris","Panthera_pardus","Canis_lupus_familiaris",
+		"Lycaon_pictus","Vulpes_lagopus","Mustela_putorius","Enhydra_lutris","Ailurus_fulgens",
+		"Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus",
+		"Manis_pentadactyla","Manis_javanica","Pteropus_alecto","Pteropus_vampyrus",
+		"Rousettus_aegyptiacus","Rhinolophus_sinicus","Hipposideros_armiger","Eptesicus_fuscus",
+		"Myotis_davidii","Myotis_brandtii","Myotis_lucifugus","Miniopterus_natalensis",
+		"Desmodus_rotundus"),c("Erinaceus_europaeus","Sorex_araneus","Condylura_cristata"))
+'erinaceidae-soricidae'<-list("Erinaceus_europaeus","Sorex_araneus","Condylura_cristata")
+eulipotyphla<-list(c("Erinaceus_europaeus","Sorex_araneus"),"Condylura_cristata",
+	c("Vicugna_pacos","Camelus_ferus","Camelus_bactrianus","Camelus_dromedarius",
+		"Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas","Lipotes_vexillifer",
+		"Kogia_breviceps","Balaenoptera_acutorostrata","Balaenoptera_bonaerensis","Bos_taurus",
+		"Bos_indicus","Bison_bison","Bos_mutus","Bubalus_bubalis","Ovis_aries","Ovis_canadensis",
+		"Capra_hircus","Pantholops_hodgsonii","Odocoileus_virginianus","Elaphurus_davidianus",
+		"Sus_scrofa","Catagonus_wagneri""Equus_caballus","Equus_przewalskii","Equus_asinus",
+		"Ceratotherium_simum","Felis_catus","Acinonyx_jubatus","Panthera_tigris",
+		"Panthera_pardus","Canis_lupus_familiaris","Lycaon_pictus","Vulpes_lagopus",
+		"Mustela_putorius","Enhydra_lutris","Ailurus_fulgens","Ailuropoda_melanoleuca",
+		"Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus",
+		"Manis_pentadactyla","Manis_javanica","Pteropus_alecto","Pteropus_vampyrus",
+		"Rousettus_aegyptiacus","Rhinolophus_sinicus","Hipposideros_armiger","Eptesicus_fuscus",
+		"Myotis_davidii","Myotis_brandtii","Myotis_lucifugus","Miniopterus_natalensis",
+		"Desmodus_rotundus"))
+laurasiatheria<-list(c("Vicugna_pacos","Camelus_ferus","Camelus_bactrianus",
+		"Camelus_dromedarius","Tursiops_truncatus","Orcinus_orca","Delphinapterus_leucas",
+		"Lipotes_vexillifer","Kogia_breviceps","Balaenoptera_acutorostrata",
+		"Balaenoptera_bonaerensis","Bos_taurus","Bos_indicus","Bison_bison","Bos_mutus",
+		"Bubalus_bubalis","Ovis_aries","Ovis_canadensis","Capra_hircus","Pantholops_hodgsonii",
+		"Odocoileus_virginianus","Elaphurus_davidianus","Sus_scrofa","Catagonus_wagneri",
+		"Equus_caballus","Equus_przewalskii","Equus_asinus","Ceratotherium_simum","Felis_catus",
+		"Acinonyx_jubatus","Panthera_tigris","Panthera_pardus","Canis_lupus_familiaris",
+		"Lycaon_pictus","Vulpes_lagopus","Mustela_putorius","Enhydra_lutris","Ailurus_fulgens",
+		"Ailuropoda_melanoleuca","Ursus_maritimus","Odobenus_rosmarus","Mirounga_angustirostris",
+		"Leptonychotes_weddellii","Neomonachus_schauinslandi","Zalophus_californianus",
+		"Manis_pentadactyla","Manis_javanica","Pteropus_alecto","Pteropus_vampyrus",
+		"Rousettus_aegyptiacus","Rhinolophus_sinicus","Hipposideros_armiger","Eptesicus_fuscus",
+		"Myotis_davidii","Myotis_brandtii","Myotis_lucifugus","Miniopterus_natalensis",
+		"Desmodus_rotundus"),c("Erinaceus_europaeus","Sorex_araneus","Condylura_cristata"),
+	c("Homo_sapiens","Pan_troglodytes","Pan_paniscus","Gorilla_gorilla","Pongo_abelii",
+		"Nomascus_leucogenys","Macaca_mulatta","Macaca_fascicularis","Macaca_nemestrina",
+		"Papio_anubis","Mandrillus_leucophaeus","Cercocebus_atys","Chlorocebus_sabaeus",
+		"Nasalis_larvatus","Rhinopithecus_roxellana","Rhinopithecus_bieti","Colobus_angolensis",
+		"Piliocolobus_tephrosceles","Callithrix_jacchus","Aotus_nancymaae","Saimiri_boliviensis",
+		"Cebus_capucinus","Otolemur_garnettii","Microcebus_murinus",
+		"Propithecus_coquereli","Tupaia_chinensis","Tupaia_tana","Jaculus_jaculus",
+		"Microtus_ochrogaster","Cricetulus_griseus","Mesocricetus_auratus",
+		"Peromyscus_maniculatus","Mus_musculus","Mus_caroli","Mus_pahari","Rattus_norvegicus",
+		"Meriones_unguiculatus","Nannospalax_galili","Castor_canadensis","Dipodomys_ordii",
+		"Heterocephalus_glaber","Fukomys_damarensis","Cavia_aperea","Cavia_porcellus",
+		"Cavia_tschudii","Dolichotis_patagonum","Chinchilla_lanigera","Octodon_degus",
+		"Spermophilus_dauricus","Marmota_marmota","Lepus_americanus","Oryctolagus_cuniculus",
+		"Ochotona_princeps"))
+
+branchlist<-list(pan,hominini,homininae,hominidae,hominoidea,papionini,cercopithecinae,presbytini,
+	colobini,colobinae,cercopithecidae,catarrhini,callitrichoidea,cebidae,platyrrhini,lemuroidea,
+	strepsirrhini,euarchonta,get('arvicolinae-cricetinae'),cricetidae,mus,murinae,muridae,
+	eumuroida,muroidea,myodonta,castorimorpha,phiomorpha,get("octodontoidea-chinchilloidea"),
+	caviomorpha,hystricomorpha,get("myodonta-castorimorpha-hystricomorpha"),sciuromorpha,
+	rodentia,lagomorpha,glires,euarchontoglires,camelus,camelidae,delphinidae,delphinoidea,
+	get("delphinoidea-inoidea"),odontoceti,mysticeti,cetacea,bovina,bovini,ovis,caprinae,
+	caprini,bovidae,cervidae,pecora,cetruminantia,artiofabula,cetartiodactyla,equus,equidae,
+	perissodactyla,felinae,panthera,felidae,canidae,mustelidae,musteloidea,ursidae,phocidae,
+	pinnipedia,arctoidea,caniformia,carnivora,pholidota,ferae,pteropus,pteropodidae,
+	yinochiroptera,yinpterochiroptera,vespertilionoidea,yangochiroptera,chiroptera,
+	get("erinaceidae-soricidae"),scrotifera,eulipotyphla,laurasiatheria)
+names(branchlist)<-c("pan","hominini","homininae","hominidae","hominoidea","papionini",
+	"cercopithecinae","presbytini","colobini","colobinae","cercopithecidae","catarrhini",
+	"callitrichoidea","cebidae","platyrrhini","lemuroidea","strepsirrhini","euarchonta",
+	"arvicolinae-cricetinae","cricetidae","mus","murinae","muridae","eumuroida","muroidea",
+	"myodonta","castorimorpha","phiomorpha","octodontoidea-chinchilloidea","caviomorpha",
+	"hystricomorpha","myodonta-castorimorpha-hystricomorpha","sciuromorpha","rodentia",
+	"lagomorpha","glires","euarchontoglires","camelus","camelidae","delphinidae","delphinoidea",
+	"delphinoidea-inoidea","odontoceti","mysticeti","cetacea","bovina","bovini","ovis",
+	"caprinae","caprini","bovidae","cervidae","pecora","cetruminantia","artiofabula",
+	"cetartiodactyla","equus","equidae","perissodactyla","felinae","panthera","felidae",
+	"canidae","mustelidae","musteloidea","ursidae","phocidae","pinnipedia","arctoidea",
+	"caniformia","carnivora","pholidota","ferae","pteropus","pteropodidae","yinochiroptera",
+	"yinpterochiroptera","vespertilionoidea","yangochiroptera","chiroptera",
+	"erinaceidae-soricidae","scrotifera","eulipotyphla","laurasiatheria")
+
+save(branchlist,file="zoonomia-branch-list.Rdata")
+
+q(save="no")
