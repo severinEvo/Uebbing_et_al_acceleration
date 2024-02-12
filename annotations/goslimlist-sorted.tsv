@@ -1,0 +1,23 @@
+goslim_id	goslim_description
+GO:0008150	all biological processes
+GO:0007049	cell cycle
+GO:0016043	cellular component organization
+GO:0051234	establishment of localization
+GO:0008283	cell population proliferation
+GO:0030154	cell differentiation
+GO:0012501	programmed cell death
+GO:0032502	developmental process
+GO:0000003	reproduction
+GO:0002376	immune system process
+GO:0050877	nervous system process
+GO:0050896	response to stimulus
+GO:0023052	signaling
+GO:0006259	dna metabolic process
+GO:0016070	rna metabolic process
+GO:0019538	protein metabolic process
+GO:0005975	carbohydrate metabolic process
+GO:1901135	carbohydrate derivative metabolic process
+GO:0006629	lipid metabolic process
+GO:0042592	homeostatic process
+GO:0009056	catabolic process
+GO:0007610	behavior

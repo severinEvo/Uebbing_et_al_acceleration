@@ -210,6 +210,35 @@ pTab$Q<-p.adjust(pTab$P,method="BH")
 pTabsign<-pTab[pTab$Q<.05 & !is.na(pTab$P),]
 write.table(pTabsign,"all_GObiol-hyperg-sign.tsv",quote=F,row.names=F,sep="\t")
 
+# Figure S4
+GOslimagr<-read.delim("annotations/GOslim_agr.tsv") # Downloaded from QuickGO
+GOslim<-unique(GOslimagr[,5:6])
+colnames(GOslim)<-c("goslim_id","go_id")
+goreslim<-merge(GOslim,pTabsign,all.y=T)
+goreslim<-rbind(goreslim,data.frame(pTabsign,goslim_id="GO:0008150")[,c(1,6,2:4)])
+
+branchlist<-names(branchlist)[names(branchlist) %in% unique(goreslim$branch)]
+goslimsort<-read.delim("annotations/goslimlist-sorted.tsv") # Downloaded from QuickGO
+
+library(RColorBrewer)
+palette<-brewer.pal(9,'Blues')
+pdf("GOslim-palette.pdf",height=25)
+par(las=2)
+plot(1,type="n",xlim=c(2,22),ylim=c(3,83),xlab="",xaxt="n",ylab="",yaxt="n",bty="n")
+axis(2,at=85:1,labels=branchlist,tick=F)
+axis(3,at=2:22,labels=goslimsort$goslim_description[-1],tick=F)
+for(b in 1:length(branchlist)){
+	branch<-branchlist[b]
+	tmptab<-data.frame(table(goreslim$goslim_id[goreslim$branch==branch]))
+	colnames(tmptab)<-c("goslim_id","count")
+	tmptab<-merge(goslimsort,tmptab,all=T)
+	tmptab$count<-replace(tmptab$count,is.na(tmptab$count),0)
+	tmptab<-tmptab[match(goslimsort$goslim_id,tmptab$goslim_id),]
+	cols<-palette[floor(log2(tmptab$count+1)/max(log2(tmptab$count+1))*8)+1]
+	rect(xleft=c(0,2:22)-.4,ybottom=86-b-.4,xright=c(0,2:22)+.4,ytop=86-b+.4,col=cols)
+}
+dev.off()
+
 # hyperG GO test for % accelerated PREs per genes - Tab. S3
 tmp<-allGenesGO[allGenesGO$ensembl_gene_id %in% cntTab$ensembl_gene_id,c(1,3)]
 bg<-data.frame(table(tmp$go_id))

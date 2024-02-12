@@ -266,7 +266,7 @@ Analyze and output Fig. 3C
 
 ### Figure 4
 
-	R CMD BATCH scripts/hyperGO.R # Fig. 4A-D
+	R CMD BATCH scripts/hyperGO.R # Fig. 4A-D, S4
 	R CMD BATCH scripts/pathway-genes.R # Fig. 4E,F
 
 ### Figure 6
