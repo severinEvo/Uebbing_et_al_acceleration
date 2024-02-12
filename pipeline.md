@@ -263,3 +263,14 @@ Intersect PREs with OCRs (including file headers)
 Analyze and output Fig. 3C
 
 	R CMD BATCH scripts/TACIT-multispecies.R
+
+### Figure 4
+
+	R CMD BATCH scripts/hyperGO.R # Fig. 4A-D
+	R CMD BATCH scripts/pathway-genes.R # Fig. 4E,F
+
+### Figure 6
+
+	R CMD BATCH scripts/lacZ.R
+
+Fig. 6D is a subpart of Fig. S5

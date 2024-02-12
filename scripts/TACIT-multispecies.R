@@ -3,10 +3,10 @@ quartile_na<-function(x){quantile(x,probs=c(.25,.75),na.rm=T)}
 quantile95_na<-function(x){quantile(x,probs=c(.025,.975),na.rm=T)}
 median_na<-function(x){median(x,na.rm=T)}
 
-all<-read.delim("../phyloP_out/phyloP-all.tsv.gz")
-all$pos<-paste(all$chr,":",all$start,"-",all$end,sep="")
-nsign<-all[p.adjust(all$pval,method="BH")>.05,]
-sign<-all[p.adjust(all$pval,method="BH")<.05,]
+datq<-read.delim("../phyloP_out/phyloP-all.tsv.gz")
+datq$pos<-paste(datq$chr,":",datq$start,"-",datq$end,sep="")
+nsign<-datq[p.adjust(datq$pval,method="BH")>.05,]
+sign<-datq[p.adjust(datq$pval,method="BH")<.05,]
 load("../../annotations/zoonomia-branch-list.Rdata")
 branches<-unique(sign$branch)
 branches<-branches[branches %in% names(branchlist)]
