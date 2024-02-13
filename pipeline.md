@@ -51,12 +51,14 @@ HOCOMOCO
 
 Motifs from Jolma et al. Cell 2013, extracted from Table S3, are included in GitHub data
 
-### Additioal annotation files
+### Miscellaneous annotation files
 
 liftOver files
 
-	wget https://hgdownload.soe.ucsc.edu/goldenPath/mm10/liftOver/mm10ToHg38.over.chain.gz
+	wget https://hgdownload.soe.ucsc.edu/goldenPath/hg19/liftOver/hg19ToHg38.over.chain.gz
 	wget https://hgdownload.soe.ucsc.edu/goldenPath/hg38/liftOver/hg38ToMm10.over.chain.gz
+	wget https://hgdownload.soe.ucsc.edu/goldenPath/mm9/liftOver/mm9ToMm10.over.chain.gz
+	wget https://hgdownload.soe.ucsc.edu/goldenPath/mm10/liftOver/mm10ToHg38.over.chain.gz
 
 phastCons scores
 
@@ -65,8 +67,8 @@ phastCons scores
 
 Branch list for R, and a second version to match with Zoonomia species (Fig. 3C)
 
-	R CMD BATCH ../scripts/branch-list.R
-	R CMD BATCH ../scripts/zoonomia-branch-list.R
+	Rscript ../scripts/branch-list.R
+	Rscript ../scripts/zoonomia-branch-list.R
 
 
 gnomAD data
@@ -177,6 +179,110 @@ Filter out results in phastBias tracks
 	for i in $(ls *_phyloP_ACC.tsv.gz | cut -f 2 -d '_' | sort -u); do echo $i; zcat $i\_phyloP_ACC.tsv.gz | head -1 >$i\_phyloP-phastBias.tsv; zcat $i\_phyloP_ACC.tsv.gz | grep -vP "^chr\t" | bedtools intersect -v -a - -b ../phastBias_out/$i\_phastBias.gff.gz >>$i\_phyloP-phastBias.tsv; gzip -f $i\_phyloP-phastBias.tsv; done
 	cd ../../
 
+# Gene-PRE connectivity data
+
+### Jung et al. Nature Genetics 2019 (original data hg19)
+NPC_P-O-contacts.bed extracted from Table S3
+
+	mkdir -p data/PRE-gene-dataset/Jung/; cd data/PRE-gene-dataset/Jung/
+	liftOver NPC_P-O-contacts.bed ../../../annotations/hg19ToHg38.over.chain NPC_P-O-contacts_hg38.bed unMapped
+	perl -lane 'if($_ =~ /;/){@s = split /;/, $F[3]; $" = "\t"; foreach(@s){print "@F[0..2]\t$_";}}else{print;}' <(zcat NPC_P-O-contacts_hg38.bed.gz) >NPC_P-O-contacts_hg38_1perline.bed; gzip NPC_P-O-contacts_hg38_1perline.bed
+	Rscript ../../../scripts/Jung-pcHiC.R
+	bedtools intersect -wo -a ../../PREs.bed.gz -b NPC_P-O-contacts_hg38_ENSEMBL.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tNPC-pcHiC";' | sort -u >../connection-collection.bed
+
+### Song et al. Nature 2020 (original data hg38)
+Tables download from NeMO Archive (controlled access)
+
+	mkdir -p ../Song/; cd ../Song/
+	zcat RG.MAPS.peaks.txt.gz | tail -n +2 | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,13 | sort -u >tmp; zcat RG.MAPS.peaks.txt.gz | tail -n +2 | perl -lane '$" = "\t"; print "@F[3..5]\t@F[0..2]";' | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,10 | sort -u >>tmp; sort -k1,1 -k2,2n tmp >RG_gencode-v40-promotor_intersect.bed
+	zcat IPC.MAPS.peaks.txt.gz | tail -n +2 | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,13 | sort -u >tmp; zcat IPC.MAPS.peaks.txt.gz | tail -n +2 | perl -lane '$" = "\t"; print "@F[3..5]\t@F[0..2]";' | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,10 | sort -u >>tmp; sort -k1,1 -k2,2n tmp >IPC_gencode-v40-promotor_intersect.bed
+	zcat eN.MAPS.peaks.txt.gz | tail -n +2 | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,13 | sort -u >tmp; zcat eN.MAPS.peaks.txt.gz | tail -n +2 | perl -lane '$" = "\t"; print "@F[3..5]\t@F[0..2]";' | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,10 | sort -u >>tmp; sort -k1,1 -k2,2n tmp >eN_gencode-v40-promotor_intersect.bed
+	zcat iN.MAPS.peaks.txt.gz | tail -n +2 | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,13 | sort -u >tmp; zcat iN.MAPS.peaks.txt.gz | tail -n +2 | perl -lane '$" = "\t"; print "@F[3..5]\t@F[0..2]";' | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,10 | sort -u >>tmp; sort -k1,1 -k2,2n tmp >iN_gencode-v40-promotor_intersect.bed
+	gzip -f *_gencode-v40-promotor_intersect.bed
+
+	bedtools intersect -wo -a ../../PREs.bed.gz -b RG_gencode-v40-promotor_intersect.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tRG-PLAC-seq";' | sort -u >>../connection-collection.bed
+	bedtools intersect -wo -a ../../PREs.bed.gz -b IPC_gencode-v40-promotor_intersect.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tIPC-PLAC-seq";' | sort -u >>../connection-collection.bed
+	bedtools intersect -wo -a ../../PREs.bed.gz -b eN_gencode-v40-promotor_intersect.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\teN-PLAC-seq";' | sort -u >>../connection-collection.bed
+	bedtools intersect -wo -a ../../PREs.bed.gz -b iN_gencode-v40-promotor_intersect.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tiN-PLAC-seq";' | sort -u >>../connection-collection.bed
+
+### Won et al. Nature 2016 (original data hg19)
+Data extracted from Tables S22,S23 (saved as .tsv from .xlsx)
+
+	mkdir -p ../Won/; cd ../Won/
+	grep -vP "^chr\t" Won_TSS_CP.tsv | cut -f 1,4,5,7 | sort -k1,1 -k2,2n >Won_TSS_CP_hg19.bed
+	liftOver Won_TSS_CP_hg19.bed ~/project/genomes/hg19ToHg38.over.chain Won_TSS_CP_hg38.bed unMapped
+	grep -vP "^chr\t" Won_TSS_GZ.tsv | cut -f 1,4,5,7 | sort -k1,1 -k2,2n >Won_TSS_GZ_hg19.bed
+	liftOver Won_TSS_GZ_hg19.bed ~/project/genomes/hg19ToHg38.over.chain Won_TSS_GZ_hg38.bed unMapped
+
+	bedtools intersect -wo -a ../../PREs.bed.gz -b /Won_TSS_CP_hg38.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tCP-HiC";' | sort -u >>../connection-collection.bed
+	bedtools intersect -wo -a ../../PREs.bed.gz -b Won_TSS_GZ_hg38.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tGZ-HiC";' | sort -u >>../connection-collection.bed
+
+### Rajarajan et al. (PsychENCODE) Science 2018 (original data hg19)
+clean_master_hiccups_loops_nonsubsampled.txt extracted from Supplemental tables xls
+
+	mkdir -p ../PsychENCODE/; cd ../PsychENCODE/
+	for i in $(cut -f 21 clean_master_hiccups_loops_nonsubsampled.txt  | sort -u); do echo $i; grep -P "\t$i\t" clean_master_hiccups_loops_nonsubsampled.txt | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40lift37.annotation_ENS.bed.gz | cut -f 4-6,29 | sort -u >tmp; grep -P "\t$i\t" clean_master_hiccups_loops_nonsubsampled.txt | perl -lane '$" = "\t"; print "@F[3..5]\t@F[0..2]";' | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40lift37.annotation_ENS.bed.gz | cut -f 4-6,10 | sort -u >>tmp; sort -k1,1 -k2,2n tmp >$i\_hiccups_loops_nonsubsampled_hg19.bed; liftOver $i\_hiccups_loops_nonsubsampled_hg19.bed ../../../annotations/hg19ToHg38.over.chain $i\_hiccups_loops_nonsubsampled_hg38.bed unMapped_$i; done; gzip -f *.bed
+
+	bedtools intersect -wo -a ../../PREs.bed.gz -b NPC_hiccups_loops_nonsubsampled_hg38.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tNPC-HiC";' | sort -u >>../connection-collection.bed
+	bedtools intersect -wo -a ../../PREs.bed.gz -b Neu_hiccups_loops_nonsubsampled_hg38.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tNeu-HiC";' | sort -u >>../connection-collection.bed
+	bedtools intersect -wo -a ../../PREs.bed.gz -b Astro_hiccups_loops_nonsubsampled_hg38.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tAstro-HiC";' | sort -u >>../connection-collection.bed
+
+### 4DNucleosome data
+
+	mkdir -p ../4Dnucleosome/; cd ../4Dnucleosome/
+
+Du, Zheng et al. Nature 2017 (original data in mm9)
+First, run hiccups (juicertools), which needs a GPU system. Here, using Google Colab (switch runtime to GPU!):
+
+	!wget https://s3.amazonaws.com/hicfiles.tc4ga.com/public/juicer/juicer_tools_1.22.01.jar
+	!curl -O --user [user token] https://data.4dnucleome.org/files-processed/4DNFII3JV8I1/@@download/4DNFII3JV8I1.hic
+	!java -Xmx10g -jar juicer_tools_1.22.01.jar hiccups 4DNFII3JV8I1.hic cortex_results --ignore-sparsity
+
+	mv merged_loops.bedpe 4DNESUQT299T_mouse-P28-cortex-mm9_hiccups-merged-loops.bed
+
+add "chr" to chromosome field
+
+	perl -lane 'if(/^#/){print;}else{$F[0] = "chr$F[0]"; $F[3] = "chr$F[3]"; $" = "\t"; print "@F";}' 4DNESUQT299T_mouse-P28-cortex-mm9_hiccups-merged-loops.bed >tmp; mv tmp 4DNESUQT299T_mouse-P28-cortex-mm9_hiccups-merged-loops.bed
+
+liftOver both anchors from mm9 to mm10
+
+	perl -lane '$" = "_"; print "$F[0]\t$F[1]\t$F[2]\t@F[3..23]";' 4DNESUQT299T_mouse-P28-cortex-mm9_hiccups-merged-loops.bed >tmp
+	liftOver tmp ../../../annotations/mm9ToMm10.over.chain.gz tmp_mm10 unMapped
+	perl -lane '$" = "_"; @u = split /_/, $F[3]; print "$u[0]\t$u[1]\t$u[2]\t@F[0..2]_@u[3..20]";' tmp_mm10 >tmp_mm9_2
+	liftOver tmp_mm9_2 ../../../annotations/mm9ToMm10.over.chain.gz 4DNESUQT299T_mouse-P28-cortex_hiccups-merged-loops_mm10.bed unMapped
+
+liftOver mm10 to hg38 and translate ENSM to ENS gene IDs
+
+	bedtools intersect -wo -a 4DNESUQT299T_mouse-P28-cortex_hiccups-merged-loops_mm10.bed -b ../../../annotations/gencode_promotor-5kup1kdn.vM29.annotation_ENS.bed.gz | cut -f 4-6,28 | sort -u >tmp; perl -lane 'next if(/^#/); $" = "\t"; print "@F[3..5]\t@F[0..2]";' 4DNESUQT299T_mouse-P28-cortex_hiccups-merged-loops_mm10.bed | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.vM29.annotation_ENS.bed.gz | cut -f 4-6,10 | sort -u >>tmp; sort -k1,1 -k2,2n tmp >cortex_hiccups_loops_mm10.bed; liftOver -minMatch=.1 cortex_hiccups_loops_mm10.bed ~/project/genomes/mm/mm10ToHg38.over.chain.gz cortex_hiccups_loops_hg38.bed unMapped
+	Rscript ../../../scripts/4Dnucleosome-cortex-ENS.R
+
+	bedtools intersect -wo -a ../../PREs.bed.gz -b cortex_hiccups_loops_hg38_ENS.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tP28-mouse-cortex-insitu-HiC";' | sort -u >>../connection-collection.bed
+
+Bertero, Fields et al. Nature Communications 2019 (original data hg38)
+First, run hiccups (juicertools), which needs a GPU system. Here, using Google Colab:
+
+	!curl -O --user [user token] https://data.4dnucleome.org/files-processed/4DNFIF1EWFUP/@@download/4DNFIF1EWFUP.hic
+	!java -Xmx10g -jar juicer_tools_1.22.01.jar hiccups 4DNFIF1EWFUP.hic heart_results --ignore-sparsity
+
+	mv merged_loops.bedpe 4DNESZFHB53P_human-fetal-heart-hg38_hiccups-merged-loops.bed
+
+add "chr" to chromosome field
+
+	perl -lane 'if(/^#/){print;}else{$F[0] = "chr$F[0]"; $F[3] = "chr$F[3]"; $" = "\t"; print "@F";}' 4DNESZFHB53P_human-fetal-heart-hg38_hiccups-merged-loops.bed >tmp; mv tmp 4DNESZFHB53P_human-fetal-heart-hg38_hiccups-merged-loops.bed
+
+	bedtools intersect -wo -a 4DNESZFHB53P_human-fetal-heart-hg38_hiccups-merged-loops.bed -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,28 | sort -u >tmp; perl -lane 'next if(/^#/); $" = "\t"; print "@F[3..5]\t@F[0..2]";' 4DNESZFHB53P_human-fetal-heart-hg38_hiccups-merged-loops.bed | bedtools intersect -wo -a - -b ../../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | cut -f 4-6,10 | sort -u >>tmp; sort -k1,1 -k2,2n tmp >heart_hiccups_loops_hg38.bed; gzip *.bed
+
+	bedtools intersect -wo -a ../../PREs.bed.gz -b heart_hiccups_loops_hg38.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tfetal-heart-DNase-HiC";' | sort -u >>../connection-collection.bed
+
+### Promoter overlap
+
+	cd ../
+	bedtools intersect -wo -a ../PREs.bed.gz -b ../../annotations/gencode_promotor-5kup1kdn.v40.annotation_ENS.bed.gz | perl -lane '$" = "\t"; print "@F[0..2]\t$F[9]\t$F[3]\tPromoter-overlap";' | sort -u >>connection-collection.bed
+
+### Collect full connectivity dataset
+
+	cat connection-collection.bed | sort -k1,1 -k2,2n >tmp; mv tmp connection-collection.bed; gzip -f connection-collection.bed
+
 # Assemble data and generate outputs
 
 ### Collect dataset and generate Figure 1
@@ -185,13 +291,13 @@ Fig. 1A was generated by plotting annotations/tree_hg38_120mammals_named.mod in 
 
 For Fig. 1B,C, S3, run
 
-	R CMD BATCH scripts/collect-phyloP.R
+	Rscript scripts/collect-phyloP.R
 
 All raw output figures were edited in Inkscape
 
 ### Figure 2
 
-	R CMD BATCH scripts/constraint.R
+	Rscript scripts/constraint.R
 
 ### Generate and analyze data for TFBS analysis of Fig. 3B
 
@@ -221,12 +327,12 @@ Intersect mapped TFBSs with PREs in their respective genome coordinates
 
 Calculate distance measures for TFBS sets in accelerated and non-accelerated PRE-branch combinations
 
-	R CMD BATCH scripts/dist-sign.R
-	R CMD BATCH scripts/dist-nsign.R
+	Rscript scripts/dist-sign.R
+	Rscript scripts/dist-nsign.R
 
 Analyze and create Fig. 3B
 
-	R CMD BATCH scripts/dist-analysis.R
+	Rscript scripts/dist-analysis.R
 
 ### Integrate and analyze OCR data for Fig. 3C
 
@@ -262,15 +368,15 @@ Intersect PREs with OCRs (including file headers)
 
 Analyze and output Fig. 3C
 
-	R CMD BATCH scripts/TACIT-multispecies.R
+	Rscript scripts/TACIT-multispecies.R
 
 ### Figure 4
 
-	R CMD BATCH scripts/hyperGO.R # Fig. 4A-D, S4
-	R CMD BATCH scripts/pathway-genes.R # Fig. 4E,F
+	Rscript scripts/hyperGO.R # Fig. 4A-D, S4
+	Rscript scripts/pathway-genes.R # Fig. 4E,F
 
 ### Figure 6
 
-	R CMD BATCH scripts/lacZ.R
+	Rscript scripts/lacZ.R
 
 Fig. 6D is a subpart of Fig. S5

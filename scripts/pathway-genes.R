@@ -8,6 +8,9 @@ uHiC<-unique(HiC[,c(4,5,7)])
 if(file.exists("data/allGenes.tsv.gz")){
 	allGenes<-read.delim("data/allGenes.tsv.gz")
 }else{
+	reqPackages<-c("biomaRt")
+	newPackages<-reqPackages[!(reqPackages %in% utils::installed.packages()[,"Package"])]
+	if(length(new.packages)>0) install.packages(newPackages)
 	library(biomaRt)
 	ensembl<-useMart("ensembl",dataset="hsapiens_gene_ensembl")
 	allGenes<-getBM(filters=c("ensembl_gene_id"),mart=ensembl,

@@ -13,6 +13,9 @@ if(file.exists("data/allGenesGO.tsv.gz")){
 	allGenesGO<-read.delim("data/allGenesGO.tsv.gz")
 }else{
 	chroms<-sub("chr","",unique(uHiC$chr))
+	reqPackages<-c("biomaRt")
+	newPackages<-reqPackages[!(reqPackages %in% utils::installed.packages()[,"Package"])]
+	if(length(new.packages)>0) install.packages(newPackages)
 	library(biomaRt)
 	ensembl<-useMart("ensembl",dataset="hsapiens_gene_ensembl")
 	allGenesGO<-getBM(
