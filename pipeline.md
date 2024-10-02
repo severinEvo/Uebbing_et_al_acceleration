@@ -70,12 +70,17 @@ Branch list for R, and a second version to match with Zoonomia species (Fig. 3C)
 	Rscript ../scripts/branch-list.R
 	Rscript ../scripts/zoonomia-branch-list.R
 
-
 gnomAD data
 
 	wget https://datasetgnomad.blob.core.windows.net/dataset/release/2.1.1/constraint/gnomad.v2.1.1.lof_metrics.by_gene.txt.bgz
 	gunzip -c gnomad.v2.1.1.lof_metrics.by_gene.txt.bgz >gnomad.v2.1.1.lof_metrics.by_gene.txt; gzip gnomad.v2.1.1.lof_metrics.by_gene.txt
 	cd ..
+
+GTEx data
+
+	wget https://storage.googleapis.com/adult-gtex/annotations/v8/metadata-files/GTEx_Analysis_v8_Annotations_SampleAttributesDS.txt
+	wget https://storage.googleapis.com/adult-gtex/bulk-gex/v8/rna-seq/GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.gct.gz
+	zcat GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.gct.gz | tail -n +3 >GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.gct; gzip GTEx_Analysis_2017-06-05_v8_RNASeQCv1.1.9_gene_reads.gct
 
 # Generate PRE dataset
 
@@ -297,6 +302,7 @@ All raw output figures were edited in Inkscape
 
 ### Figure 2
 
+	Rscript scripts/GTEx.R
 	Rscript scripts/constraint.R
 
 ### Generate and analyze data for TFBS analysis of Fig. 3B
@@ -379,4 +385,4 @@ Analyze and output Fig. 3C
 
 	Rscript scripts/lacZ.R
 
-Fig. 6D is a subpart of Fig. S5
+Fig. 6D is a subset of Fig. S5
