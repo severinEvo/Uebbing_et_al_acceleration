@@ -1,5 +1,6 @@
 quartile<-function(x){quantile(x,probs=c(.25,.75))}
 quantile90<-function(x){quantile(x,probs=c(.05,.95))}
+library(tidyr)
 
 pres<-read.delim("data/PRE-gene-dataset/PREs_qualFiltered.bed.gz",header=F)
 colnames(pres)<-c("chr","start","end","PRE_type","seq_type","phastCons")
@@ -56,6 +57,7 @@ ccres<-data.frame(table(tmp$go_id))
 colnames(ccres)<-c("go_id","cCREs")
 all<-merge(bg,pces,all.x=T)
 all<-merge(all,ccres,all.x=T)
+all[,3:4]<-replace(all[,3:4],is.na(all[,3:4]),0)
 
 q<-all$pCEs # number of white balls drawn # sign of GO x
 m<-sum(all$pCEs) # number of white balls in the urn. # all sign acc
@@ -262,7 +264,6 @@ all$P<-phyper(q-1,m,n,k,lower.tail=F)
 all$Q<-p.adjust(all$P,method="BH")
 all$enrichment<-all$top/sum(all$top)/all$bg*sum(all$bg)
 signTopGO<-merge(unique(allGenesGO[,-(1:2)]),all[all$Q<.05,])
-signTopCats<-merge(tmp,allGenesGO[allGenesGO$go_id %in% signTopGO$go_id,])
 write.table(signTopGO,"pcAcc-hyperG-sign.tsv",quote=F,sep="\t",row.names=F)
 
 pdf("pcAcc-hist.pdf",width=10) # Like Fig. 4A but for % acceleration
@@ -291,7 +292,6 @@ all$P<-phyper(q-1,m,n,k,lower.tail=F)
 all$Q<-p.adjust(all$P,method="BH")
 all$enrichment<-all$top/sum(all$top)/all$bg*sum(all$bg)
 signTopGO<-merge(unique(allGenesGO[,-(1:2)]),all[all$Q<.05,])
-signTopCats<-merge(tmp,allGenesGO[allGenesGO$go_id %in% signTopGO$go_id,])
 write.table(signTopGO,"../noAccEventsPerGene-hyperG-sign.tsv",quote=F,sep="\t",row.names=F)
 
 # Fig. 4A
@@ -321,7 +321,6 @@ all$P<-phyper(q-1,m,n,k,lower.tail=F)
 all$Q<-p.adjust(all$P,method="BH")
 all$enrichment<-all$top/sum(all$top)/all$bg*sum(all$bg)
 signTopGO<-merge(unique(allGenesGO[,-(1:2)]),all[all$Q<.05,])
-signTopCats<-merge(tmp,allGenesGO[allGenesGO$go_id %in% signTopGO$go_id,])
 write.table(signTopGO,"noPREsPerGene-hyperG-sign.tsv",quote=F,sep="\t",row.names=F)
 
 pdf("noPREsPerGene.pdf",width=10) # Like Fig. 4A but for #PREs per gene
