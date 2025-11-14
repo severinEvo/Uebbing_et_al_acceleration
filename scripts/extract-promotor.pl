@@ -27,7 +27,7 @@ our($opt_c);
 our($opt_5);
 our($opt_3);
 our($opt_i);
-if(@ARGV < 1 | !(defined $opt_c)){die "Error: Input file(s) missing.\n$usage\n";}
+if(@ARGV < 1 || !(defined $opt_c)){die "Error: Input file(s) missing.\n$usage\n";}
 my $gencode = $ARGV[0]; # gencode annotation GTF
 if(!defined $opt_5){
 	$opt_5 = 5000;
